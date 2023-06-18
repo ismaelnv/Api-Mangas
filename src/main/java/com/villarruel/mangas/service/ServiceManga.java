@@ -14,32 +14,40 @@ public class ServiceManga {
     @Autowired
     private IManga iManga;
 
-    public List<Manga> getAll(){
+    public List<Manga> getAll() {
         return (List<Manga>) iManga.findAll();
     }
 
-    public Optional<Manga> getManga(Integer mangaId){
+    public Optional<Manga> getManga(Integer mangaId) {
         return iManga.findById(mangaId);
     }
 
-    public Manga save( Manga manga){
+    public Manga save(Manga manga) {
         return iManga.save(manga);
     }
 
-    public Boolean delete(Integer mangaId){
-        if(getManga(mangaId).isPresent()){
-            iManga.deleteById(mangaId);;
+    public Boolean delete(Integer mangaId) {
+        if (getManga(mangaId).isPresent()) {
+            iManga.deleteById(mangaId);
             return true;
-        }else{
+        } else {
             return false;
         }
-    } 
+    }
 
-    public Manga Update(Integer id, Manga manga){
+    public Manga Update(Integer id, Manga manga) {
         Optional<Manga> optenerM = iManga.findById(id);
-        if(optenerM.isPresent()){
+        if (optenerM.isPresent()) {
             iManga.save(manga);
         }
         return manga;
+    }
+
+    public List<Manga> obtenerMangasDeComedia(String categoria) {
+        return iManga.finByManga("Comedia");
+    }
+
+    public List<Manga> obtenerMangasDeDrama(String categoria) {
+        return iManga.finByManga("drama");
     }
 }

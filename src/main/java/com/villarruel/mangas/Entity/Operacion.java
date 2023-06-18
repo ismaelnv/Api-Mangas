@@ -29,19 +29,19 @@ public class Operacion {
     private Usuario usuario;
 
     public Integer getIdOperacion() {
-        return idOperacion;
+        return this.idOperacion;
     }
 
     public Integer getMangaId() {
-        return mangaId;
+        return this.mangaId;
     }
 
     public Integer getUsuarioId() {
-        return usuarioId;
+        return this.usuarioId;
     }
 
     public String getTipoDeOperacion() {
-        return tipoDeOperacion;
+        return this.tipoDeOperacion;
     }
 
     public void setIdOperacion(Integer idOperacion) {

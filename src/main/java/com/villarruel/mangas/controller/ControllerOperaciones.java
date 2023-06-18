@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.villarruel.mangas.Entity.Operacion;
 import com.villarruel.mangas.service.ServicioOperacion;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 
 @RestController
@@ -25,39 +29,56 @@ public class ControllerOperaciones {
     private ServicioOperacion servicioOperacion;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Operacion>> getAll(){
-        return new ResponseEntity<>( servicioOperacion.getAll(), HttpStatus.OK);
+    @ApiOperation("Se encarga de traer una lista de operaciones")
+    @ApiResponse(code = 200, message = "OK")
+    public ResponseEntity<List<Operacion>> getAll() {
+        return new ResponseEntity<>(servicioOperacion.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Operacion> getOperacion(@PathVariable("id") Integer idOperacion){
-        return servicioOperacion.getOperacion(idOperacion).map(servicioOperacion -> new ResponseEntity<>(servicioOperacion, HttpStatus.OK))
-        .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @ApiOperation("Se encarga  de traer una operacion por su clave primaria")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Operacion NOT FOUND"),
+    })
+    public ResponseEntity<Operacion> getOperacion(@PathVariable("id") Integer idOperacion) {
+        return servicioOperacion.getOperacion(idOperacion)
+                .map(servicioOperacion -> new ResponseEntity<>(servicioOperacion, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Operacion> save(@RequestBody Operacion operacion){
-        return  new ResponseEntity<>(servicioOperacion.save(operacion), HttpStatus.CREATED);
+    @ApiOperation("Se encarga de actualizar operaciones")
+    @ApiResponse(code = 201, message = "Se encarga de agregar operaciones")
+    public ResponseEntity<Operacion> save(@RequestBody Operacion operacion) {
+        return new ResponseEntity<>(servicioOperacion.save(operacion), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity  delete(@PathVariable("id") Integer idOperacion){
-        if(servicioOperacion.delete(idOperacion)){
+    @ApiOperation("Se encarga de eliminar operaciones")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = " OPERACION NOT_FOUND")
+    })
+    public ResponseEntity delete(@PathVariable("id") Integer idOperacion) {
+        if (servicioOperacion.delete(idOperacion)) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable ("id") Integer idOPeracion, @RequestBody Operacion operacion){
-        if(servicioOperacion.getOperacion(idOPeracion).isPresent()){
+    @ApiOperation("Se  encarga de actualizar operaciones")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "OPERACION NOT_FOUND") })
+    public ResponseEntity update(@PathVariable("id") Integer idOPeracion, @RequestBody Operacion operacion) {
+        if (servicioOperacion.getOperacion(idOPeracion).isPresent()) {
             return new ResponseEntity<>(servicioOperacion.update(idOPeracion, operacion), HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
-    
 }

@@ -8,79 +8,87 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mangas")
+@Table(name = "manga")
 public class Manga {
-    
+
     @Id
     @Column(name = "manga_id")
     private Integer mangaId;
-    
+
     @Column(name = "mangaka_id")
     private Integer mangakaId;
-    
+
     private String title;
 
     private Integer year;
 
+    @Column(name = "language")
     private String lenguage;
 
     @Column(name = "cover_url")
     private String coverUrl;
 
+    private String categoria;
     private Double price;
-    private Float  sellable;
+    private Float sellable;
     private Integer copies;
+
+    @Column(name = "description")
     private String descriptin;
-    
+
     @ManyToOne
     @JoinColumn(name = "mangaka_id", insertable = false, updatable = false)
     private Mangaka mangaka;
 
-    public Integer getMangaId(){
+    public Integer getMangaId() {
         return this.mangaId;
     }
 
-    public Integer getMangakaId(){
+    public Integer getMangakaId() {
         return this.mangakaId;
     }
 
     public Integer getYear() {
-        return year;
+        return this.year;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getLenguage() {
-        return lenguage;
+        return this.lenguage;
     }
 
     public String getCoverUrl() {
-        return coverUrl;
+        return this.coverUrl;
     }
 
     public Double getPrice() {
-        return price;
+        return this.price;
     }
 
     public Float getSellable() {
-        return sellable;
+        return this.sellable;
     }
 
     public Integer getCopies() {
-        return copies;
+        return this.copies;
     }
 
     public String getDescriptin() {
-        return descriptin;
+        return this.descriptin;
     }
 
-    public void setManga(Integer mangaId){
+    public String getCategoria() {
+        return this.categoria;
+    }
+
+    public void setManga(Integer mangaId) {
         this.mangaId = mangaId;
     }
 
-    public void setMangaka(Integer mangakaId){
+    public void setMangaka(Integer mangakaId) {
         this.mangakaId = mangakaId;
     }
 
@@ -115,5 +123,8 @@ public class Manga {
     public void setYear(Integer year) {
         this.year = year;
     }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 }
-  

@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "clients")
 public class Usuario {
-    
+
     @Id
     @Column(name = "client_id")
     private Integer usuarioId;
@@ -25,34 +25,30 @@ public class Usuario {
     @Column(name = "birthdate")
     private Date cumpleaños;
 
-    @Column(name = "gender ")
+    @Column(name = "gender")
     private String genero;
 
     @OneToMany(mappedBy = "usuario")
     private List<Operacion> operaciones;
 
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
     public Integer getUsuarioId() {
-        return usuarioId;
+        return this.usuarioId;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Date getCumpleaños() {
-        return cumpleaños;
+        return this.cumpleaños;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getGenero() {
-        return genero;
+        return this.genero;
     }
 
     public void setUsuarioId(Integer usuarioId) {
@@ -69,5 +65,9 @@ public class Usuario {
 
     public void setCumpleaños(Date cumpleaños) {
         this.cumpleaños = cumpleaños;
-    }   
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
 }
